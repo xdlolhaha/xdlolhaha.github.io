@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Uploader</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Upload an Image</h1>
+    <% if (typeof msg != 'undefined' && msg != '') { %>
+      <div class="alert"><%= msg %></div>
+    <% } %>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+      <input type="file" name="image">
+      <input type="submit" value="Upload">
+    </form>
+    <% if (typeof file != 'undefined' && file != '') { %>
+      <h3>Uploaded Image:</h3>
+      <img src="<%= file %>" alt="Uploaded Image">
+      <p>Embed this link on Discord: <code><%= file %></code></p>
+    <% } %>
+  </div>
+</body>
+</html>
