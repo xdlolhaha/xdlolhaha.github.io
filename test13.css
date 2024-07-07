@@ -1,0 +1,42 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 50%;
+  margin: auto;
+  overflow: hidden;
+  padding-top: 30px;
+}
+
+form {
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+}
+
+input[type="file"] {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="submit"] {
+  display: inline-block;
+  border: none;
+  background: #333;
+  color: #fff;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.alert {
+  color: red;
+}
+
+img {
+  max-width: 100%;
+}
